@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <!-- Bootstrap CSS -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+    integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
+    crossorigin="anonymous"
+  />
+
+  <!-- Font Awesome CSS -->
+  <link
+    href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    rel="stylesheet"
+  />
+  <link href="/mystyle.css" rel="stylesheet" />
+
+       <!-- j쿼리 -->
+  <script src="https://code.jquery.com/jquery-3.5.1.js"
+      integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <title>Blog</title>
+    <!-- <script>
+      function getSelf() {
+          $.ajax({
+            type: "GET",
+            url: "/api/users/me",
+            headers: {
+              authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+            success: function (response) {
+            },
+            error: function (xhr, status, error) {
+              if (status == 401) {
+                alert("로그인이 필요합니다.");
+              } else {
+                localStorage.clear();
+                alert("알 수 없는 문제가 발생했습니다. 관리자에게 문의하세요.");
+              }
+              window.location.href = "/";
+            },
+          });
+        }
+  </script>
+  <script>
+      getSelf(function (u) {
+          user = u;
+        });
+  </script> -->
+</head>
+<body>
+  <nav
+    class="navbar navbar-expand-sm navbar-dark bg-sparta justify-content-end"
+    >
+    <a class="navbar-brand" href="/main">
+      <img
+        src="/logo_big_tr.png"
+        width="30"
+        height="30"
+        class="d-inline-block align-top"
+        alt=""
+      />
+      총명이의 블로그
+    </a>
+    <div
+      class="navbar-collapse collapse flex-grow-0 ml-auto"
+      id="navbarSupportedContent"
+      style=""
+    ></div>
+    </div>
+  </nav>
+    <div class="container">
+      <h1 class="mb-1"><%= article.title %></h1>
+      <h5 class="mb-1">(작성자 : <%= article.author %>)</h5>
+        <div class="text-muted mb-2">
+        <%= article.createdAt.toLocaleDateString() %>
+        </div>
+        <div>
+            <%= article.description %>
+        </div>
+    <a href="/main" class="btn btn-secondary">전체게시판</a>
+    <a href="/articles/edit/<%= article.id %>" class="btn btn-info">게시글 수정하기</a>
+    <a href="/articles/comment/<%= article.id %>" class=  "btn btn-success">댓글작성</a>   
+    <div class="container">
+      <h1 class="mb-4"></h1>
+  
+          <div class="card mt-4">
+              <div class="card-body">
+                  <h5>댓글</h5>
+                  <h5 class="card-title"><%= article.comment %></h4>
+                  <div class="card-subtitle text-muted mb-2">
+                      <%= article.createdAt.toLocaleDateString() %>
+                  </div>
+                  <button type="submit" class="btn btn-danger" formaction="/articles/<%= article.id %>?_method=DELETE">삭제하기</button>
+                  <a href="articles/<%= article.id %>" class="btn btn-primary"> 댓글 수정하기</a>
+                  
+              </div>
+          </div>
+  </div>
+
+  </div>
+</body>
+</html>
+

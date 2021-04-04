@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+      integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
+      crossorigin="anonymous"
+    />
+
+    <!-- Font Awesome CSS -->
+    <link
+      href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
+    <link href="/mystyle.css" rel="stylesheet" />
+
+         <!-- j쿼리 -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <title>Blog</title>
+    <script>
+        function getSelf(callback) {
+            $.ajax({
+              type: "GET",
+              url: "/api/users/me",
+              headers: {
+                authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+              success: function (response) {
+                callback(response.user);
+              },
+              error: function (xhr, status, error) {
+                if (xhr.status == 400) {
+                  alert("로그인이 필요합니다.");
+                } else {
+                  localStorage.clear();
+                  alert("알 수 없는 문제가 발생했습니다. 관리자에게 문의하세요.");
+                }
+                window.location.href = "/";
+              },
+            });
+          }
+    </script>
+    <script>
+        getSelf(function (u) {
+            user = u;
+          });
+    </script>
+</head>
+<body>
+    <nav
+    class="navbar navbar-expand-sm navbar-dark bg-sparta justify-content-end"
+    >
+    <a class="navbar-brand" href="/main">
+      <img
+        src="/logo_big_tr.png"
+        width="30"
+        height="30"
+        class="d-inline-block align-top"
+        alt=""
+      />
+      총명이의 블로그
+    </a>
+    <div
+      class="navbar-collapse collapse flex-grow-0 ml-auto"
+      id="navbarSupportedContent"
+      style=""
+    ></div>
+    </div>
+  </nav>
+    <div class="container">
+        <h1 class="mb-4">게시글 작성</h1>
+        
+        <form action="/articles" method="POST">
+
+            <div class="form-group">
+                <label for="title">제목</label>
+                <input required value="<%= article.title %>" type="text" name="title" id="title" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="author">작성자</label>
+                <input required value="<%= article.author %>" type="text" name="author" id="author" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="author">비밀번호</label>
+                <input required value="<%= article.password %>" type="password" name="password" id="password" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="description">내용</label>
+                <textarea required type="text" name="description" id="description" class="form-control"><%= article.description %></textarea>
+            </div>
+
+            
+            <a href="/main" class="btn btn-secondary">취소</a>
+            <button type="submit" class="btn btn-primary">저장하기</button>
+        </form>
+    </div>
+</body>
+</html>
